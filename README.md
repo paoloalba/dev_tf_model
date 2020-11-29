@@ -25,4 +25,4 @@ The script is already set for the use of Azure Container Registry, but any other
 
 ### Run on a K8s cluster
 
-For run on a K8s cluster see https://github.com/paoloalba/k8s_deployer
+For run on a K8s cluster see https://github.com/paoloalba/deployer_k8s
