@@ -1,0 +1,22 @@
+FROM tensorflow/tensorflow:latest-gpu
+
+RUN apt-get update
+RUN apt-get install -y autoconf automake libtool curl make g++ unzip
+RUN apt-get install -y protobuf-compiler
+RUN apt-get install 'ffmpeg'\
+    'libsm6'\ 
+    'libxext6'  -y
+
+COPY ./auxiliary_lib/tf_research /tf_research
+
+WORKDIR /tf_research/
+RUN protoc object_detection/protos/*.proto --python_out=.
+RUN cp object_detection/packages/tf2/setup.py .
+RUN python -m pip install --use-feature=2020-resolver .
+
+COPY ./app /app
+
+WORKDIR /app/
+
+RUN chmod +x ./run_training.sh
+ENTRYPOINT ["./run_training.sh"]

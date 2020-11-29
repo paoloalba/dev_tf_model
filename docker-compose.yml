@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+
+  application:
+    # build: ./
+    build:
+      context: .
+      dockerfile: ${dockerfile_src}
+    image: ${registry}/${repositoryName}:${versionNumber}
+    container_name: application
+    volumes:
+        - ${permanent_storage}:/mnt/mounted_volume/permanent_storage/
+        # - ${local_storage}:/mnt/local_volume/
+        # - ${src_training_dir}:/mnt/mounted_volume/sicilian_cards_sample/
+    environment:
+        - IS_DOCKER
+        - PIPELINE_CONFIG_PATH
+        - MODEL_DIR
+        - CHECKPOINT_EVERY_N
+        - CHECKPOINT_MAX_TO_KEEP
+        - BATCH_SIZE
+        - NUM_CLASSES
+        - SAMPLE_DIR
+        - EVAL_TIMEOUT
+        - OUTPUT_EXTRACT_MODEL_DIR
+        #this variable forces python to flush stdout
+        - PYTHONUNBUFFERED=1
